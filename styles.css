@@ -1,0 +1,331 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4a1942;
+    --secondary: #1a1a2e;
+    --accent: #e94560;
+    --gold: #ffd700;
+    --text: #eaeaea;
+    --glow: 0 0 20px rgba(233, 69, 96, 0.5);
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 640px;
+    height: 540px;
+    background: #0f0f1a;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), var(--glow);
+    overflow: hidden;
+}
+
+/* Title Screen */
+.title-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    z-index: 10;
+    animation: fadeIn 0.5s ease;
+}
+
+.title-screen h1 {
+    font-size: 28px;
+    color: var(--gold);
+    text-shadow: 3px 3px 0 #b8860b, 0 0 30px rgba(255, 215, 0, 0.5);
+    margin-bottom: 20px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.subtitle {
+    font-size: 10px;
+    color: var(--accent);
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+.instructions {
+    font-size: 8px;
+    color: var(--text);
+    opacity: 0.6;
+    text-align: center;
+    line-height: 1.8;
+    margin-top: 30px;
+}
+
+/* Buttons */
+.pixel-btn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    padding: 15px 30px;
+    background: linear-gradient(180deg, var(--accent) 0%, #c73e54 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #a33347, 0 6px 20px rgba(233, 69, 96, 0.4);
+    transition: all 0.1s ease;
+    position: relative;
+}
+
+.pixel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #a33347, 0 8px 25px rgba(233, 69, 96, 0.5);
+}
+
+.pixel-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #a33347;
+}
+
+.pixel-btn.small {
+    font-size: 8px;
+    padding: 10px 20px;
+}
+
+/* Game Screen */
+.game-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.hud {
+    height: 60px;
+    background: linear-gradient(180deg, #1f1f3a 0%, #16162e 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 3px solid var(--accent);
+}
+
+.quest-display {
+    font-size: 9px;
+    color: var(--text);
+}
+
+.key-count {
+    font-size: 12px;
+    color: var(--gold);
+}
+
+#gameCanvas {
+    display: block;
+    background: #1a3a2a;
+    image-rendering: pixelated;
+}
+
+/* Dialogue Box */
+.dialogue-box {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(15, 15, 26, 0.95);
+    border: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+}
+
+#dialogueText {
+    font-size: 10px;
+    color: var(--text);
+    line-height: 1.8;
+    min-height: 40px;
+}
+
+.continue-hint {
+    display: block;
+    font-size: 8px;
+    color: var(--accent);
+    opacity: 0.7;
+    margin-top: 15px;
+    animation: blink 1s infinite;
+}
+
+/* Phone Modal */
+.phone-modal {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(180deg, #1f1f3a 0%, #16162e 100%);
+    border: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+    animation: scaleIn 0.3s ease;
+}
+
+.trophy {
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.modal-content h2 {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    font-size: 9px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.special-message {
+    color: var(--accent) !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+
+#phoneForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#phoneForm label {
+    font-size: 10px;
+    color: var(--text);
+}
+
+#phoneInput {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    padding: 15px;
+    background: #0f0f1a;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    color: var(--text);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#phoneInput:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+#phoneInput::placeholder {
+    color: #555;
+}
+
+/* Victory Screen */
+.victory-screen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 40;
+}
+
+.victory-content {
+    text-align: center;
+}
+
+.victory-content h2 {
+    font-size: 24px;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    margin-bottom: 30px;
+}
+
+.heart-animation {
+    font-size: 48px;
+    margin-bottom: 30px;
+    animation: heartbeat 1s ease-in-out infinite;
+}
+
+.saved-number {
+    font-size: 14px;
+    color: var(--accent);
+    margin: 20px 0 30px;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 0.7; }
+    25%, 75% { opacity: 0.3; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.15); }
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+    .game-container {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: calc(100% - 60px);
+    }
+}

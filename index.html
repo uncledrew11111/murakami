@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julian's Quest</title>
+    <meta name="description" content="A retro adventure game for Julian Weiss">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="title-screen" id="titleScreen">
+            <h1>JULIAN'S QUEST</h1>
+            <p class="subtitle">A Message Awaits...</p>
+            <button id="startBtn" class="pixel-btn">START GAME</button>
+            <p class="instructions">Use WASD or Arrow Keys to move<br>Press SPACE to interact</p>
+        </div>
 
+        <div class="game-screen hidden" id="gameScreen">
+            <div class="hud">
+                <div class="quest-display" id="questDisplay">Quest: Find the 3 Golden Keys</div>
+                <div class="key-count" id="keyCount">🔑 0/3</div>
+            </div>
+            <canvas id="gameCanvas" width="640" height="480"></canvas>
+            <div class="dialogue-box hidden" id="dialogueBox">
+                <p id="dialogueText"></p>
+                <span class="continue-hint">Press SPACE to continue</span>
+            </div>
+        </div>
+
+        <div class="phone-modal hidden" id="phoneModal">
+            <div class="modal-content">
+                <div class="trophy">🏆</div>
+                <h2>QUEST COMPLETE!</h2>
+                <p>You found all the keys and unlocked the secret!</p>
+                <p class="special-message">Now it's your turn, Julian...</p>
+                <form id="phoneForm">
+                    <label for="phoneInput">Enter your phone number:</label>
+                    <input type="tel" id="phoneInput" placeholder="(555) 123-4567" required>
+                    <button type="submit" class="pixel-btn">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="victory-screen hidden" id="victoryScreen">
+            <div class="victory-content">
+                <h2>THANK YOU!</h2>
+                <div class="heart-animation">❤️</div>
+                <p>Your number has been saved!</p>
+                <p class="saved-number" id="savedNumber"></p>
+                <button id="downloadBtn" class="pixel-btn small">Download Backup</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="storage.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
