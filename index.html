@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="game-container">
         <div class="title-screen" id="titleScreen">
@@ -17,6 +19,7 @@
             <p class="subtitle">A Message Awaits...</p>
             <button id="startBtn" class="pixel-btn">START GAME</button>
             <p class="instructions">Use WASD or Arrow Keys to move<br>Press SPACE to interact</p>
+            <button id="viewNumbersBtn" class="pixel-btn small" style="margin-top: 20px;">VIEW SAVED NUMBERS</button>
         </div>
 
         <div class="game-screen hidden" id="gameScreen">
@@ -54,9 +57,19 @@
                 <button id="downloadBtn" class="pixel-btn small">Download Backup</button>
             </div>
         </div>
+
+        <div class="numbers-modal hidden" id="numbersModal">
+            <div class="modal-content">
+                <h2>📱 SAVED NUMBERS</h2>
+                <div id="numbersList" style="margin: 20px 0; max-height: 200px; overflow-y: auto;"></div>
+                <button id="closeNumbersBtn" class="pixel-btn small">CLOSE</button>
+                <button id="downloadNumbersBtn" class="pixel-btn small" style="margin-left: 10px;">DOWNLOAD</button>
+            </div>
+        </div>
     </div>
 
     <script src="storage.js"></script>
     <script src="game.js"></script>
 </body>
+
 </html>

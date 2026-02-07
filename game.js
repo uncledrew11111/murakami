@@ -662,4 +662,34 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadBtn.addEventListener('click', () => {
         PhoneStorage.downloadAsJSON();
     });
+
+    // View saved numbers
+    const viewNumbersBtn = document.getElementById('viewNumbersBtn');
+    const numbersModal = document.getElementById('numbersModal');
+    const closeNumbersBtn = document.getElementById('closeNumbersBtn');
+    const downloadNumbersBtn = document.getElementById('downloadNumbersBtn');
+    const numbersList = document.getElementById('numbersList');
+
+    viewNumbersBtn.addEventListener('click', () => {
+        const numbers = PhoneStorage.getAllNumbers();
+        if (numbers.length === 0) {
+            numbersList.innerHTML = '<p style="font-size: 10px; color: #e94560;">No numbers saved yet!</p>';
+        } else {
+            numbersList.innerHTML = numbers.map((entry, i) =>
+                `<p style="font-size: 10px; color: #ffd700; margin: 10px 0;">
+                    ${i + 1}. ${entry.phoneNumber}<br>
+                    <span style="font-size: 8px; color: #888;">${new Date(entry.timestamp).toLocaleString()}</span>
+                </p>`
+            ).join('');
+        }
+        numbersModal.classList.remove('hidden');
+    });
+
+    closeNumbersBtn.addEventListener('click', () => {
+        numbersModal.classList.add('hidden');
+    });
+
+    downloadNumbersBtn.addEventListener('click', () => {
+        PhoneStorage.downloadAsJSON();
+    });
 });
