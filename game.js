@@ -349,7 +349,7 @@ class Game {
         this.keyItems = [
             { x: 3, y: 3, collected: false },
             { x: 16, y: 2, collected: false },
-            { x: 10, y: 7, collected: false }
+            { x: 8, y: 8, collected: false }
         ];
 
         this.npcs = [
