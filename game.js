@@ -342,6 +342,8 @@ class Game {
         this.dialogueActive = false;
         this.currentDialogue = [];
         this.dialogueIndex = 0;
+        this.interactCooldown = 0; // Prevent rapid re-triggering
+        this.spaceJustPressed = false; // Track single press
 
         // Game objects
         this.keyItems = [
@@ -408,7 +410,10 @@ class Game {
             case 'ArrowRight': case 'd': case 'D': this.keys.right = true; break;
             case ' ':
                 e.preventDefault();
-                this.keys.interact = true;
+                if (!this.keys.interact) {
+                    this.keys.interact = true;
+                    this.spaceJustPressed = true;
+                }
                 break;
         }
     }
@@ -419,7 +424,10 @@ class Game {
             case 'ArrowDown': case 's': case 'S': this.keys.down = false; break;
             case 'ArrowLeft': case 'a': case 'A': this.keys.left = false; break;
             case 'ArrowRight': case 'd': case 'D': this.keys.right = false; break;
-            case ' ': this.keys.interact = false; break;
+            case ' ':
+                this.keys.interact = false;
+                this.spaceJustPressed = false;
+                break;
         }
     }
 
@@ -452,9 +460,16 @@ class Game {
 
         this.frame++;
 
-        // Handle dialogue
+        // Decrease cooldown
+        if (this.interactCooldown > 0) {
+            this.interactCooldown--;
+        }
+
+        // Handle dialogue - only advance on fresh space press
         if (this.dialogueActive) {
-            if (this.keys.interact && this.frame % 10 === 0) {
+            if (this.spaceJustPressed && this.interactCooldown === 0) {
+                this.spaceJustPressed = false;
+                this.interactCooldown = 15; // Cooldown frames
                 this.dialogueIndex++;
                 if (this.dialogueIndex >= this.currentDialogue.length) {
                     this.closeDialogue();
@@ -513,8 +528,8 @@ class Game {
             }
         });
 
-        // Check NPC interaction
-        if (this.keys.interact) {
+        // Check NPC interaction - only on fresh space press with cooldown
+        if (this.spaceJustPressed && this.interactCooldown === 0) {
             this.npcs.forEach(npc => {
                 const dx = (this.player.x + 16) - (npc.x * CONFIG.TILE_SIZE + 16);
                 const dy = (this.player.y + 16) - (npc.y * CONFIG.TILE_SIZE + 16);
@@ -523,6 +538,8 @@ class Game {
                 if (dist < 48 && !this.dialogueActive) {
                     this.showDialogue(npc.dialogue);
                     this.audio.playInteract();
+                    this.spaceJustPressed = false;
+                    this.interactCooldown = 20;
                 }
             });
         }
